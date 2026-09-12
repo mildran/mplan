@@ -1,16 +1,45 @@
 package com.mplan.modelo;
 
-public abstract class Usuario {
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name ="usuarios")
+public class Usuario {
+
+    public enum Rol {
+        USUARIO,
+        ADMINISTRADOR
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String usuario;
     private String password;
     private String email;
     private String nombre;
     private String apellido;
 
-    public Usuario(String usuario, String password, String email) {
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
+
+    public Usuario() {}
+
+    public Usuario(String usuario, String password, String email, Rol rol) {
         this.usuario = usuario;
         this.password = password;
         this.email = email;
+        this.rol = rol;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getUsuario() {
@@ -53,5 +82,11 @@ public abstract class Usuario {
         this.apellido = apellido;
     }
 
-    public String devolverTipo;
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
 }

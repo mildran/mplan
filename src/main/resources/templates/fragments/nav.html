@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <nav th:fragment="nav">
   <div class="logo">
@@ -12,7 +12,15 @@
   </div>
   <ul class="nav-links">
     <li><a href="/">Inicio</a></li>
-    <li><a href="#">Menú</a></li>
+    <li sec:authorize="hasRole('ADMINISTRADOR')"><a href="/gestionar">Gestionar</a></li>
+    <li sec:authorize="isAnonymous()"><a href="/login">Iniciar sesión</a></li>
+    <li sec:authorize="isAnonymous()"><a href="/registro">Crear cuenta</a></li>
+    <li sec:authorize="isAuthenticated()" class="nav-user">@<span sec:authentication="name">usuario</span></li>
+    <li sec:authorize="isAuthenticated()">
+      <form th:action="@{/logout}" method="post" class="logout-form">
+        <button type="submit" class="logout-link">Cerrar sesión</button>
+      </form>
+    </li>
   </ul>
 </nav>
 </body>

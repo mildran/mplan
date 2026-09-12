@@ -1,0 +1,103 @@
+:root {
+    --verde-bosque: #1B3A2F;
+    --arena: #E8E1D3;
+    --texto-claro: #F5F3ED;
+    --texto-oscuro: #1A1A1A;
+    --dorado: #C9A961;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--texto-oscuro);
+}
+
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--verde-bosque) 0%, var(--arena) 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--texto-claro);
+    letter-spacing: 0.02em;
+}
+
+.logo-dot {
+    color: var(--dorado);
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--texto-claro);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-content h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 4rem;
+    font-weight: 500;
+    color: var(--texto-claro);
+    max-width: 700px;
+    line-height: 1.1;
+}
+
+.hero-content p {
+    margin-top: 1.5rem;
+    color: var(--texto-claro);
+    max-width: 500px;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.cta-button {
+    margin-top: 2rem;
+    padding: 0.9rem 2rem;
+    background-color: var(--texto-oscuro);
+    color: var(--texto-claro);
+    border: none;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+}

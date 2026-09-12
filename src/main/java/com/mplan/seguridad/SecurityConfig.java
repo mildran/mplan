@@ -21,12 +21,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/registro/**", "/recuperar/**", "/css/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/", "/login", "/registro/**", "/recuperar/**", "/css/**", "/error").permitAll()
                         .requestMatchers("/gestionar/**").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)

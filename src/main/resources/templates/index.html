@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 <body>
 <th:block layout:fragment="content">
-    <h1>MPLAN</h1>
-    <p>Sistema simple de gestión de tareas.</p>
-    <a href="login" class="cta-button">Empezar</a>
+    <div sec:authorize="isAnonymous()">
+        <h1>MPLAN</h1>
+        <p>Sistema simple de gestión de tareas.</p>
+        <a href="login" class="cta-button">Empezar</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <h1 class="saludo-titulo" th:text="'Hola, ' + ${nombre}">Hola</h1>
+        <p>Pronto podrás gestionar tus planes desde aquí.</p>
+    </div>
 </th:block>
 </body>
 </html>

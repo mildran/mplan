@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<th:block layout:fragment="content">
+  <h1>Recuperar contraseña</h1>
+
+  <p th:if="${mensaje}" th:text="${mensaje}" class="mensaje success-msg"></p>
+  <p th:if="${error}" th:text="${error}" class="mensaje error-msg"></p>
+
+  <form th:action="@{/recuperar}" method="post" class="form-box">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <button type="submit" class="cta-button">Enviar enlace</button>
+  </form>
+
+  <p class="form-links">
+    <a href="/login">Volver al login</a>
+  </p>
+</th:block>
+</body>
+</html>

@@ -5,9 +5,10 @@
 <th:block layout:fragment="content">
   <h1>Iniciar sesión</h1>
 
-  <p th:if="${param.error}" class="error-msg">Usuario o contraseña incorrectos.</p>
-  <p th:if="${param.registrado}" class="error-msg" style="color:#4CAF50;background:rgba(76,175,80,0.15);">Cuenta creada. Ya puedes iniciar sesión.</p>
-  <p th:if="${param.logout}" class="error-msg" style="color:#4CAF50;background:rgba(76,175,80,0.15);">Sesión cerrada correctamente.</p>
+  <p th:if="${param.error}" class="mensaje error-msg">Usuario o contraseña incorrectos.</p>
+  <p th:if="${param.registrado}" class="mensaje success-msg">Cuenta creada. Ya puedes iniciar sesión.</p>
+  <p th:if="${param.logout}" class="mensaje success-msg">Sesión cerrada correctamente.</p>
+  <p th:if="${param.restablecida}" class="mensaje success-msg">Contraseña actualizada. Ya puedes iniciar sesión.</p>
 
   <form th:action="@{/login}" method="post" class="form-box">
     <div class="form-group">

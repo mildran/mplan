@@ -91,6 +91,7 @@ nav {
 }
 
 .cta-button {
+    display: inline-block;
     margin-top: 2rem;
     padding: 0.9rem 2rem;
     background-color: var(--texto-oscuro);
@@ -131,12 +132,21 @@ nav {
     font-family: 'Inter', sans-serif;
 }
 
-.error-msg {
-    color: #E27D60;
-    background: rgba(226, 125, 96, 0.15);
-    padding: 0.6rem 1rem;
+.mensaje {
+    padding: 0.75rem 1.25rem;
     border-radius: 8px;
     font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--texto-claro);
+    border-left: 3px solid;
+}
+
+.error-msg {
+    border-left-color: #E27D60;
+}
+
+.success-msg {
+    border-left-color: #7FB88A;
 }
 
 .form-box .cta-button {
@@ -204,4 +214,15 @@ nav {
 .tabla-usuarios th {
     font-weight: 600;
     color: var(--dorado);
+}
+
+h1.saludo-titulo {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--texto-claro);
+}
+
+html, body {
+    background: var(--verde-bosque);
 }

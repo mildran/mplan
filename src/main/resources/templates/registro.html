@@ -5,7 +5,7 @@
 <th:block layout:fragment="content">
     <h1>Crear cuenta</h1>
     <form th:action="@{/registro}" th:object="${registroForm}" method="post" class="form-box">
-        <p th:if="${error}" th:text="${error}" class="error-msg"></p>
+        <p th:if="${error}" th:text="${error}" class="mensaje error-msg"></p>
 
         <div class="form-group">
             <label for="usuario">Usuario</label>

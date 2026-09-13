@@ -125,12 +125,15 @@ nav {
     color: var(--texto-claro);
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     padding: 0.7rem 1rem;
     border-radius: 8px;
     border: none;
     font-size: 0.95rem;
     font-family: 'Inter', sans-serif;
+    background: white;
+    color: var(--texto-oscuro);
 }
 
 .mensaje {
@@ -344,5 +347,121 @@ h1.panel-titulo {
 }
 
 .zona-peligro .cta-button {
+    margin-top: 0;
+}
+
+.tabla-usuarios td a {
+    color: var(--texto-claro);
+    text-decoration: underline;
+}
+
+.pagina-libro {
+    position: relative;
+    max-width: 100%;
+    aspect-ratio: 1 / 1.4142;
+    border-radius: 6px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.pagina-titulo-esquina {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: rgba(27, 58, 47, 0.5);
+}
+
+.pagina-libro.portada-libro {
+    background: linear-gradient(160deg, var(--verde-bosque) 0%, #0F241C 100%);
+    border: 2px solid var(--dorado);
+    gap: 1.5rem;
+}
+
+.pagina-libro.portada-libro h1 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 2.2rem;
+    color: var(--texto-claro);
+    max-width: 100%;
+}
+
+.pagina-libro.pagina-escritura {
+    background-color: #FDFCF8;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 3.5rem 3rem;
+}
+
+.pagina-libro.tamano-a4 {
+    width: 794px;
+    max-width: 100%;
+}
+
+.pagina-libro.tamano-a5 {
+    width: 561px;
+    max-width: 100%;
+}
+
+.texto-pagina {
+    flex: 1;
+    width: 100%;
+    border: none;
+    resize: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 35px;
+    padding: 0;
+    color: var(--texto-oscuro);
+    outline: none;
+    background-color: transparent;
+}
+
+.texto-pagina.rayado {
+    background-attachment: local;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 34px,
+        rgba(27, 58, 47, 0.25) 35px
+    );
+}
+
+.libro-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.selector-pagina {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    color: var(--texto-oscuro);
+}
+
+.libro-pie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-volver {
     margin-top: 0;
 }

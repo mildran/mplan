@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<th:block layout:fragment="content">
+
+    <div th:if="${esPortada}" class="pagina-libro portada-libro" th:classappend="${libreta.tamano.name() == 'A5'} ? 'tamano-a5' : 'tamano-a4'">
+        <h1 th:text="${libreta.nombre}"></h1>
+
+        <form th:if="${totalPaginas == 0}" th:action="@{'/libretas/' + ${libreta.id} + '/paginas/nueva'}" method="post">
+            <button type="submit" class="cta-button">Añadir página</button>
+        </form>
+
+        <a th:if="${totalPaginas > 0}" th:href="@{'/libretas/' + ${libreta.id} + '?pagina=1'}" class="cta-button">Ir a la primera página</a>
+    </div>
+
+    <form th:if="${!esPortada}" id="form-pagina"
+          th:action="@{'/libretas/' + ${libreta.id} + '/paginas/' + ${paginaActual.id} + '/guardar'}" method="post">
+
+        <div class="libro-nav">
+            <button type="submit" name="accion" value="anterior" class="cta-button btn-small">‹ Anterior</button>
+
+            <select name="paginaDestino" class="selector-pagina">
+                <option th:each="n : ${#numbers.sequence(1, totalPaginas)}"
+                        th:value="${n}"
+                        th:text="'Página ' + ${n}"
+                        th:selected="${n == ordenActual}"></option>
+            </select>
+            <button type="submit" name="accion" value="saltar" class="cta-button btn-small">Ir</button>
+
+            <button type="submit" name="accion" value="siguiente" class="cta-button btn-small" th:if="${ordenActual < totalPaginas}">Siguiente ›</button>
+            <button type="submit" name="accion" value="nueva" class="cta-button btn-small">+ Añadir página</button>
+        </div>
+
+        <div class="pagina-libro pagina-escritura" th:classappend="${libreta.tamano.name() == 'A5'} ? 'tamano-a5' : 'tamano-a4'">
+            <span class="pagina-titulo-esquina" th:text="${libreta.nombre}"></span>
+            <textarea name="contenido" id="texto-pagina" class="texto-pagina"
+                      th:classappend="${libreta.estilo.name() == 'RAYADO'} ? 'rayado' : ''"
+                      th:text="${paginaActual.contenido}"></textarea>
+        </div>
+    </form>
+
+    <div class="libro-pie">
+        <a href="/libretas" class="cta-button btn-small btn-volver">‹ Mis libretas</a>
+
+        <form th:if="${!esPortada}" th:action="@{'/libretas/' + ${libreta.id} + '/paginas/' + ${paginaActual.id} + '/borrar'}" method="post"
+              onsubmit="return confirm('¿Seguro que quieres borrar esta página? Esta acción no se puede deshacer.');">
+            <button type="submit" class="cta-button btn-small btn-danger">Borrar esta página</button>
+        </form>
+    </div>
+
+    <script th:if="${!esPortada}" th:inline="javascript">
+        (function () {
+            var textarea = document.getElementById('texto-pagina');
+            var url = /*[[@{'/libretas/' + ${libreta.id} + '/paginas/' + ${paginaActual.id} + '/autoguardar'}]]*/ '';
+            var csrfMeta = document.querySelector('meta[name="_csrf"]');
+            var csrfHeaderMeta = document.querySelector('meta[name="_csrf_header"]');
+            var timeoutId = null;
+
+            textarea.addEventListener('input', function () {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(function () {
+                    var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+                    if (csrfMeta && csrfHeaderMeta) {
+                        headers[csrfHeaderMeta.content] = csrfMeta.content;
+                    }
+                    fetch(url, {
+                        method: 'POST',
+                        headers: headers,
+                        body: 'contenido=' + encodeURIComponent(textarea.value)
+                    });
+                }, 800);
+            });
+        })();
+    </script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<th:block layout:fragment="content">
+    <h1 class="panel-titulo">Mis libretas</h1>
+
+    <p th:if="${error}" th:text="${error}" class="mensaje error-msg"></p>
+
+    <p th:if="${#lists.isEmpty(libretas)}" class="mensaje success-msg">Todavía no tienes ninguna libreta.</p>
+
+    <table class="tabla-usuarios" th:unless="${#lists.isEmpty(libretas)}">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="l : ${libretas}">
+            <td><a th:href="@{'/libretas/' + ${l.id}}" th:text="${l.nombre}"></a></td>
+            <td th:text="${l.etiqueta}"></td>
+            <td>
+                <form th:action="@{'/libretas/' + ${l.id} + '/borrar'}" method="post" onsubmit="return confirm('¿Seguro que quieres borrar esta libreta? Esta acción no se puede deshacer.');">
+                    <button type="submit" class="cta-button btn-small btn-danger">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="panel-card">
+        <form th:action="@{/libretas/nueva}" method="post" class="form-box">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tamano">Tamaño</label>
+                    <select id="tamano" name="tamano" required>
+                        <option value="A4">A4</option>
+                        <option value="A5">A5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estilo">Estilo</label>
+                    <select id="estilo" name="estilo" required>
+                        <option value="RAYADO">Rallada</option>
+                        <option value="BLANCO">Blanco</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="cta-button">Crear libreta</button>
+        </form>
+    </div>
+</th:block>
+</body>
+</html>

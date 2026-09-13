@@ -12,6 +12,12 @@
   </div>
   <ul class="nav-links">
     <li><a href="/">Inicio</a></li>
+    <li sec:authorize="isAuthenticated()" class="nav-dropdown">
+      <span class="nav-dropdown-trigger">Menú</span>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/libretas">Libretas</a></li>
+      </ul>
+    </li>
     <li sec:authorize="hasRole('ADMINISTRADOR')" class="nav-dropdown">
       <span class="nav-dropdown-trigger">Gestionar</span>
       <ul class="nav-dropdown-menu">

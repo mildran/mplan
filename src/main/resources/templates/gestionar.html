@@ -3,14 +3,17 @@
       layout:decorate="~{layout}">
 <body>
 <th:block layout:fragment="content">
-    <h1>Gestionar usuarios</h1>
+    <h1 class="panel-titulo">Gestionar usuarios</h1>
     <table class="tabla-usuarios">
         <thead>
+        <tr>
         <tr>
             <th>Usuario</th>
             <th>Email</th>
             <th>Nombre</th>
             <th>Rol</th>
+            <th></th>
+        </tr>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +22,11 @@
             <td th:text="${u.email}"></td>
             <td th:text="${u.nombre} + ' ' + ${u.apellido}"></td>
             <td th:text="${u.rol}"></td>
+            <td>
+                <form th:action="@{'/gestionar/' + ${u.id} + '/borrar'}" method="post" onsubmit="return confirm('¿Seguro que quieres borrar a este usuario? Esta acción no se puede deshacer.');">
+                    <button type="submit" class="cta-button btn-small btn-danger">Borrar</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

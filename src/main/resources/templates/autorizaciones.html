@@ -3,7 +3,7 @@
       layout:decorate="~{layout}">
 <body>
 <th:block layout:fragment="content">
-  <h1>Autorizaciones pendientes</h1>
+  <h1 class="panel-titulo">Autorizaciones pendientes</h1>
 
   <p th:if="${#lists.isEmpty(pendientes)}" class="mensaje success-msg">No hay registros pendientes de autorización.</p>
 
@@ -22,9 +22,14 @@
       <td th:text="${u.email}"></td>
       <td th:text="${u.nombre} + ' ' + ${u.apellido}"></td>
       <td>
-        <form th:action="@{'/gestionar/autorizaciones/' + ${u.id} + '/autorizar'}" method="post">
-          <button type="submit" class="cta-button btn-small">Autorizar</button>
-        </form>
+        <div style="display:flex; gap:0.5rem;">
+          <form th:action="@{'/gestionar/autorizaciones/' + ${u.id} + '/autorizar'}" method="post">
+            <button type="submit" class="cta-button btn-small">Autorizar</button>
+          </form>
+          <form th:action="@{'/gestionar/autorizaciones/' + ${u.id} + '/rechazar'}" method="post" onsubmit="return confirm('¿Seguro que quieres rechazar este registro? Se borrará al usuario.');">
+            <button type="submit" class="cta-button btn-small btn-danger">No autorizar</button>
+          </form>
+        </div>
       </td>
     </tr>
     </tbody>

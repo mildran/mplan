@@ -92,6 +92,7 @@ nav {
 
 .cta-button {
     display: inline-block;
+    white-space: nowrap;
     margin-top: 2rem;
     padding: 0.9rem 2rem;
     background-color: var(--texto-oscuro);
@@ -274,4 +275,16 @@ html, body {
 
 .nav-dropdown-menu a:hover {
     background: rgba(245, 243, 237, 0.08);
+}
+.hero-content:has(.panel-titulo) {
+    justify-content: flex-start;
+    padding-top: 4rem;
+}
+
+h1.panel-titulo {
+    font-size: 2rem;
+}
+
+.btn-danger {
+    background-color: #E27D60;
 }

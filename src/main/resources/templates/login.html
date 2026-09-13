@@ -6,7 +6,7 @@
   <h1>Iniciar sesión</h1>
 
   <p th:if="${param.error}" class="mensaje error-msg">Usuario o contraseña incorrectos.</p>
-  <p th:if="${param.registrado}" class="mensaje success-msg">Cuenta creada. Ya puedes iniciar sesión.</p>
+  <p th:if="${param.registrado}" class="mensaje success-msg">Cuenta creada. Queda pendiente de autorización por un administrador.</p>
   <p th:if="${param.logout}" class="mensaje success-msg">Sesión cerrada correctamente.</p>
   <p th:if="${param.restablecida}" class="mensaje success-msg">Contraseña actualizada. Ya puedes iniciar sesión.</p>
 

@@ -12,7 +12,13 @@
   </div>
   <ul class="nav-links">
     <li><a href="/">Inicio</a></li>
-    <li sec:authorize="hasRole('ADMINISTRADOR')"><a href="/gestionar">Gestionar</a></li>
+    <li sec:authorize="hasRole('ADMINISTRADOR')" class="nav-dropdown">
+      <span class="nav-dropdown-trigger">Gestionar</span>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/gestionar">Gestión de usuarios</a></li>
+        <li><a href="/gestionar/autorizaciones">Autorizaciones pendientes (<span th:text="${@usuarioRepository.countByAprobadoFalse()}">0</span>)</a></li>
+      </ul>
+    </li>
     <li sec:authorize="isAnonymous()"><a href="/login">Iniciar sesión</a></li>
     <li sec:authorize="isAnonymous()"><a href="/registro">Crear cuenta</a></li>
     <li sec:authorize="isAuthenticated()" class="nav-user">@<span sec:authentication="name">usuario</span></li>

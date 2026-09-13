@@ -25,6 +25,7 @@ public class Usuario {
     private String email;
     private String nombre;
     private String apellido;
+    private boolean aprobado=false;
 
     @Enumerated(EnumType.STRING)
     private Rol rol;
@@ -88,5 +89,12 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public boolean isAprobado() {
+        return aprobado;
+    }
+    public void setAprobado(boolean aprobado) {
+        this.aprobado = aprobado;
     }
 }

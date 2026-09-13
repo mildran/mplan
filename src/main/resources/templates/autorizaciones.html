@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<th:block layout:fragment="content">
+  <h1>Autorizaciones pendientes</h1>
+
+  <p th:if="${#lists.isEmpty(pendientes)}" class="mensaje success-msg">No hay registros pendientes de autorización.</p>
+
+  <table class="tabla-usuarios" th:unless="${#lists.isEmpty(pendientes)}">
+    <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Email</th>
+      <th>Nombre</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="u : ${pendientes}">
+      <td th:text="${u.usuario}"></td>
+      <td th:text="${u.email}"></td>
+      <td th:text="${u.nombre} + ' ' + ${u.apellido}"></td>
+      <td>
+        <form th:action="@{'/gestionar/autorizaciones/' + ${u.id} + '/autorizar'}" method="post">
+          <button type="submit" class="cta-button btn-small">Autorizar</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</th:block>
+</body>
+</html>

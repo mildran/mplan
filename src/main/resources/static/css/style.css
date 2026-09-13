@@ -226,3 +226,52 @@ h1.saludo-titulo {
 html, body {
     background: var(--verde-bosque);
 }
+
+.btn-small {
+    margin-top: 0;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-trigger {
+    cursor: pointer;
+    color: var(--texto-claro);
+    font-size: 0.95rem;
+}
+
+.nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0;
+    padding-top: 0.75rem;
+    background: var(--verde-bosque);
+    border: 1px solid rgba(245, 243, 237, 0.15);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    min-width: 220px;
+    list-style: none;
+    z-index: 10;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+}
+
+.nav-dropdown-menu a {
+    display: block;
+    padding: 0.6rem 1.25rem;
+    color: var(--texto-claro);
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.nav-dropdown-menu a:hover {
+    background: rgba(245, 243, 237, 0.08);
+}

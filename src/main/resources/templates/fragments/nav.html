@@ -21,7 +21,12 @@
     </li>
     <li sec:authorize="isAnonymous()"><a href="/login">Iniciar sesión</a></li>
     <li sec:authorize="isAnonymous()"><a href="/registro">Crear cuenta</a></li>
-    <li sec:authorize="isAuthenticated()" class="nav-user">@<span sec:authentication="name">usuario</span></li>
+    <li sec:authorize="isAuthenticated()" class="nav-dropdown">
+      <span class="nav-dropdown-trigger nav-user">@<span sec:authentication="name">usuario</span></span>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/perfil">Mis datos</a></li>
+      </ul>
+    </li>
     <li sec:authorize="isAuthenticated()">
       <form th:action="@{/logout}" method="post" class="logout-form">
         <button type="submit" class="logout-link">Cerrar sesión</button>

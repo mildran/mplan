@@ -9,6 +9,7 @@
   <p th:if="${param.registrado}" class="mensaje success-msg">Cuenta creada. Queda pendiente de autorización por un administrador.</p>
   <p th:if="${param.logout}" class="mensaje success-msg">Sesión cerrada correctamente.</p>
   <p th:if="${param.restablecida}" class="mensaje success-msg">Contraseña actualizada. Ya puedes iniciar sesión.</p>
+  <p th:if="${param.cuentaEliminada}" class="mensaje success-msg">Tu cuenta ha sido eliminada.</p>
 
   <form th:action="@{/login}" method="post" class="form-box">
     <div class="form-group">

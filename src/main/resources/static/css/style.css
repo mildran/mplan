@@ -288,3 +288,61 @@ h1.panel-titulo {
 .btn-danger {
     background-color: #E27D60;
 }
+
+.panel-card {
+    width: 100%;
+    max-width: 560px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 1.5rem;
+}
+
+.panel-card .form-box {
+    max-width: 100%;
+    margin-top: 0;
+}
+
+.zona-peligro {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(245, 243, 237, 0.15);
+    text-align: center;
+}
+
+.zona-peligro h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    color: var(--texto-claro);
+    margin-bottom: 0.5rem;
+}
+
+.zona-peligro p {
+    font-size: 0.9rem;
+    color: var(--texto-claro);
+    opacity: 0.85;
+    margin-bottom: 1rem;
+}
+.nav-dropdown-trigger.nav-user {
+    color: var(--dorado);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-row > .form-group {
+    min-width: 0;
+}
+
+.ayuda-campo {
+    font-size: 0.75rem;
+    color: var(--texto-claro);
+    opacity: 0.7;
+}
+
+.zona-peligro .cta-button {
+    margin-top: 0;
+}

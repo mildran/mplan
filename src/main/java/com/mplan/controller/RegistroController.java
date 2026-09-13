@@ -74,8 +74,8 @@ public class RegistroController {
         mensaje.setTo(usuario.getEmail());
         mensaje.setSubject("Registro recibido - mplan");
         mensaje.setText("Hola " + usuario.getNombre() + ",\n\n"
-                + "Hemos recibido tu registro en mplan. \nTu cuenta está pendiente de autorización (mira tu correo" +
-                " para saber cuando se te ha autorizado "
+                + "Hemos recibido tu registro en mplan. \nTu cuenta está pendiente de autorización " +
+                "\n(mira tu correo para saber cuando se te ha autorizado)"
                 + "por un administrador");
         mailSender.send(mensaje);
 

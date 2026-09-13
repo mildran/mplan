@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<th:block layout:fragment="content">
+  <h1 class="panel-titulo">Gestión de datos</h1>
+
+  <p th:if="${mensaje}" th:text="${mensaje}" class="mensaje success-msg"></p>
+  <p th:if="${error}" th:text="${error}" class="mensaje error-msg"></p>
+
+  <div class="panel-card">
+    <form th:action="@{/perfil}" th:object="${perfilForm}" method="post" class="form-box">
+      <div class="form-group">
+        <label for="usuarioLogin">Usuario</label>
+        <input type="text" id="usuarioLogin" th:value="${usuarioLogin}" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" th:field="*{nombre}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido">Apellidos</label>
+          <input type="text" id="apellido" th:field="*{apellido}" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nuevaPassword">Nueva contraseña</label>
+          <input type="password" id="nuevaPassword" th:field="*{nuevaPassword}">
+          <span class="ayuda-campo">No rellenes los campos de contraseña si no quieres cambiarla.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmarNuevaPassword">Confirmar nueva contraseña</label>
+          <input type="password" id="confirmarNuevaPassword" th:field="*{confirmarNuevaPassword}">
+        </div>
+
+      </div>
+
+      <button type="submit" class="cta-button">Guardar cambios</button>
+    </form>
+
+    <div class="zona-peligro">
+      <h2>Eliminar cuenta</h2>
+      <p>Esta acción es irreversible, se borrará tu cuenta, con todos tus datos, permanentemente.</p>
+      <form th:action="@{/perfil/borrar}" method="post" onsubmit="return confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción es irreversible y no se puede deshacer.');">
+        <button type="submit" class="cta-button btn-danger">Eliminar mi cuenta</button>
+      </form>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

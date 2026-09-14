@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
+    <th:block layout:fragment="head-extra">
+        <link th:if="${!esPortada}" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.snow.min.css">
+    </th:block>
+</head>
 <body>
 <th:block layout:fragment="content">
 
@@ -32,12 +37,39 @@
             <button type="submit" name="accion" value="nueva" class="cta-button btn-small">+ Añadir página</button>
         </div>
 
+        <div id="toolbar-quill" class="editor-toolbar-quill">
+            <select class="ql-font">
+                <option value="inter" selected>Inter</option>
+                <option value="fraunces">Fraunces</option>
+                <option value="arial">Arial</option>
+                <option value="georgia">Georgia</option>
+                <option value="courier-new">Courier New</option>
+            </select>
+            <select class="ql-size">
+                <option value="small">Pequeña</option>
+                <option selected>Normal</option>
+                <option value="large">Grande</option>
+                <option value="huge">Muy grande</option>
+            </select>
+            <button class="ql-bold" title="Negrita"></button>
+            <button class="ql-italic" title="Cursiva"></button>
+            <button class="ql-underline" title="Subrayado"></button>
+            <button class="ql-strike" title="Tachado"></button>
+            <select class="ql-align" title="Alineación">
+                <option selected></option>
+                <option value="center"></option>
+                <option value="right"></option>
+            </select>
+            <button class="ql-list" value="bullet" title="Lista con viñetas"></button>
+            <button class="ql-list" value="ordered" title="Lista numerada"></button>
+        </div>
+
         <div class="pagina-libro pagina-escritura" th:classappend="${libreta.tamano.name() == 'A5'} ? 'tamano-a5' : 'tamano-a4'">
             <span class="pagina-titulo-esquina" th:text="${libreta.nombre}"></span>
-            <textarea name="contenido" id="texto-pagina" class="texto-pagina"
-                      th:classappend="${libreta.estilo.name() == 'RAYADO'} ? 'rayado' : ''"
-                      th:text="${paginaActual.contenido}"></textarea>
+            <div id="editor-quill" class="editor-quill" th:classappend="${libreta.estilo.name() == 'RAYADO'} ? 'rayado' : ''"></div>
         </div>
+
+        <input type="hidden" name="contenido" id="contenido-oculto">
     </form>
 
     <div class="libro-pie">
@@ -49,27 +81,126 @@
         </form>
     </div>
 
+    <script th:if="${!esPortada}" src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.6/quill.min.js"></script>
     <script th:if="${!esPortada}" th:inline="javascript">
         (function () {
-            var textarea = document.getElementById('texto-pagina');
+            var Font = Quill.import('formats/font');
+            Font.whitelist = ['inter', 'fraunces', 'arial', 'georgia', 'courier-new'];
+            Quill.register(Font, true);
+
+            var quill = new Quill('#editor-quill', {
+                theme: 'snow',
+                modules: {
+                    toolbar: '#toolbar-quill',
+                    keyboard: {
+                        bindings: {
+                            tabulador: {
+                                key: 9,
+                                handler: function (range) {
+                                    quill.insertText(range.index, '\t', 'user');
+                                    quill.setSelection(range.index + 1, 0, 'user');
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            var contenidoInicial = /*[[${paginaActual.contenido}]]*/ '';
+            if (contenidoInicial) {
+                quill.clipboard.dangerouslyPasteHTML(contenidoInicial);
+                quill.history.clear();
+            }
+
+            var editorEl = document.getElementById('editor-quill');
+            var oculto = document.getElementById('contenido-oculto');
+            var form = document.getElementById('form-pagina');
             var url = /*[[@{'/libretas/' + ${libreta.id} + '/paginas/' + ${paginaActual.id} + '/autoguardar'}]]*/ '';
             var csrfMeta = document.querySelector('meta[name="_csrf"]');
             var csrfHeaderMeta = document.querySelector('meta[name="_csrf_header"]');
             var timeoutId = null;
 
-            textarea.addEventListener('input', function () {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(function () {
-                    var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-                    if (csrfMeta && csrfHeaderMeta) {
-                        headers[csrfHeaderMeta.content] = csrfMeta.content;
-                    }
-                    fetch(url, {
-                        method: 'POST',
-                        headers: headers,
-                        body: 'contenido=' + encodeURIComponent(textarea.value)
+            function guardarEnSegundoPlano() {
+                var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+                if (csrfMeta && csrfHeaderMeta) {
+                    headers[csrfHeaderMeta.content] = csrfMeta.content;
+                }
+                fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: 'contenido=' + encodeURIComponent(quill.root.innerHTML)
+                });
+            }
+
+            function actualizarRelleno() {
+                editorEl.querySelectorAll(':scope > .linea-relleno').forEach(function (el) { el.remove(); });
+                if (!editorEl.classList.contains('rayado')) return;
+
+                var qlEditor = editorEl.querySelector('.ql-editor');
+                var alturaLinea = 36;
+                var alturaDisponible = editorEl.clientHeight;
+                var alturaUsada = qlEditor.scrollHeight;
+
+                while (alturaUsada + alturaLinea <= alturaDisponible) {
+                    var relleno = document.createElement('div');
+                    relleno.className = 'linea-relleno';
+                    editorEl.appendChild(relleno);
+                    alturaUsada += alturaLinea;
+                }
+            }
+
+            setTimeout(actualizarRelleno, 0);
+            window.addEventListener('resize', actualizarRelleno);
+
+            editorEl.addEventListener('click', function (e) {
+                if (e.target.closest('.ql-editor')) return;
+                var fillers = Array.prototype.slice.call(editorEl.querySelectorAll(':scope > .linea-relleno'));
+                var clickedFiller = e.target.closest('.linea-relleno');
+                var lineasNuevas = clickedFiller ? fillers.indexOf(clickedFiller) + 1 : 1;
+                var inicio = quill.getLength() - 1;
+                var formato = quill.getFormat(inicio, 0);
+                quill.insertText(inicio, '\n'.repeat(lineasNuevas), formato, 'user');
+                quill.focus();
+                quill.setSelection(inicio + lineasNuevas, 0, 'user');
+                Object.keys(formato).forEach(function (clave) {
+                    quill.format(clave, formato[clave], 'user');
+                });
+                var barra = quill.getModule('toolbar');
+                if (barra) {
+                    barra.update(quill.getSelection());
+                    barra.container.querySelectorAll('select').forEach(function (sel) {
+                        sel.dispatchEvent(new Event('change'));
                     });
-                }, 800);
+                }
+            });
+
+            function indiceInicioCambio(delta) {
+                var index = 0;
+                for (var i = 0; i < delta.ops.length; i++) {
+                    var op = delta.ops[i];
+                    if (op.retain) { index += op.retain; } else { break; }
+                }
+                return index;
+            }
+
+            quill.on('text-change', function (delta, oldDelta, source) {
+                if (source === 'user') {
+                    var qlEditor = editorEl.querySelector('.ql-editor');
+                    if (qlEditor.scrollHeight > editorEl.clientHeight + 1) {
+                        quill.setContents(oldDelta, 'api');
+                        quill.setSelection(indiceInicioCambio(delta), 0, 'api');
+                        actualizarRelleno();
+                        return;
+                    }
+                }
+                actualizarRelleno();
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(guardarEnSegundoPlano, 800);
+            });
+
+            form.addEventListener('submit', function () {
+                oculto.value = quill.root.innerHTML;
             });
         })();
     </script>

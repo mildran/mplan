@@ -161,7 +161,7 @@ public class LibretaVerController {
             }
         }
         paginaRepository.saveAll(paginas);
-        paginaRepository.save(new Pagina(libreta, ordenActual + 1, ""));
+        paginaRepository.save(new Pagina(libreta, ordenActual + 1, "<p><br></p>"));
     }
 
     private boolean esPropietario(Libreta libreta, UserDetails userDetails) {

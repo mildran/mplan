@@ -357,7 +357,7 @@ h1.panel-titulo {
 
 .pagina-libro {
     position: relative;
-    max-width: 100%;
+    max-width: calc(100vw - 4rem);
     aspect-ratio: 1 / 1.4142;
     border-radius: 6px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
@@ -398,41 +398,83 @@ h1.panel-titulo {
     align-items: stretch;
     justify-content: flex-start;
     padding: 3.5rem 3rem;
+    overflow: hidden;
 }
 
 .pagina-libro.tamano-a4 {
     width: 794px;
-    max-width: 100%;
+    max-width: calc(100vw - 4rem);
 }
 
 .pagina-libro.tamano-a5 {
     width: 561px;
-    max-width: 100%;
+    max-width: calc(100vw - 4rem);
 }
 
-.texto-pagina {
+.editor-quill {
     flex: 1;
+    min-height: 0;
     width: 100%;
-    border: none;
-    resize: none;
+    display: flex;
+    flex-direction: column;
+    border: none !important;
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 35px;
-    padding: 0;
-    color: var(--texto-oscuro);
-    outline: none;
-    background-color: transparent;
 }
 
-.texto-pagina.rayado {
-    background-attachment: local;
-    background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent 34px,
-        rgba(27, 58, 47, 0.25) 35px
-    );
+.editor-quill .ql-editor {
+    flex: none;
+    height: auto !important;
+    padding: 0;
+    overflow-y: hidden;
+    color: var(--texto-oscuro);
+    font-size: 16px;
 }
+
+.editor-quill .ql-editor p {
+    margin: 0;
+    max-width: none;
+    line-height: 35px;
+    min-height: 35px;
+    color: var(--texto-oscuro);
+    opacity: 1;
+    font-size: inherit;
+}
+
+.editor-quill .ql-editor ul,
+.editor-quill .ql-editor ol {
+    padding-left: 0;
+}
+
+.editor-quill .ql-editor li {
+    margin: 0;
+    max-width: none;
+    line-height: 35px;
+    min-height: 35px;
+    color: var(--texto-oscuro);
+    opacity: 1;
+    font-size: inherit;
+}
+
+.editor-quill.rayado .ql-editor p,
+.editor-quill.rayado .ql-editor li,
+.editor-quill.rayado .linea-relleno {
+    border-bottom: 1px solid rgba(27, 58, 47, 0.25);
+}
+
+.linea-relleno {
+    height: 36px;
+    flex-shrink: 0;
+}
+
+.ql-font-inter { font-family: 'Inter', sans-serif; }
+.ql-font-fraunces { font-family: 'Fraunces', serif; }
+.ql-font-arial { font-family: Arial, sans-serif; }
+.ql-font-georgia { font-family: Georgia, serif; }
+.ql-font-courier-new { font-family: 'Courier New', monospace; }
+
+.ql-size-small { font-size: 12px !important; line-height: 35px !important; }
+.ql-size-large { font-size: 20px !important; line-height: 35px !important; }
+.ql-size-huge { font-size: 24px !important; line-height: 35px !important; }
 
 .libro-nav {
     display: flex;
@@ -441,6 +483,51 @@ h1.panel-titulo {
     gap: 0.75rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
+}
+
+.editor-toolbar-quill.ql-toolbar.ql-snow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.editor-toolbar-quill .ql-picker-label,
+.editor-toolbar-quill .ql-picker-item {
+    color: var(--texto-claro) !important;
+}
+
+.editor-toolbar-quill .ql-stroke {
+    stroke: var(--texto-claro) !important;
+}
+
+.editor-toolbar-quill .ql-fill {
+    fill: var(--texto-claro) !important;
+}
+
+.editor-toolbar-quill .ql-picker-options {
+    background: var(--verde-bosque) !important;
+    border: 1px solid rgba(245, 243, 237, 0.15) !important;
+}
+
+.editor-toolbar-quill button:hover .ql-stroke,
+.editor-toolbar-quill button.ql-active .ql-stroke,
+.editor-toolbar-quill .ql-picker-label.ql-active .ql-stroke,
+.editor-toolbar-quill .ql-picker-label:hover .ql-stroke {
+    stroke: var(--dorado) !important;
+}
+
+.editor-toolbar-quill button.ql-active,
+.editor-toolbar-quill .ql-picker-label.ql-active,
+.editor-toolbar-quill .ql-picker-item:hover,
+.editor-toolbar-quill .ql-picker-label:hover {
+    color: var(--dorado) !important;
 }
 
 .selector-pagina {
